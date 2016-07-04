@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.funshion.autotest.R;
 import com.funshion.autotest.logic.FunLogicTvSourceManager;
+import com.funshion.autotest.util.deviceUtils;
+import com.funshion.autotest.util.portInfo;
 import com.mstar.android.tv.TvCommonManager;
 
 import java.util.ArrayList;
@@ -29,14 +31,10 @@ public class FunUiTvSourceManager implements FunUiBase{
     private static final int FUN_VIEW_ATV_ID = 0x200;
     private static final int FUN_VIEW_DTV_ID = 0x300;
     private static final int FUN_VIEW_AV_ID = 0x400;
+    private static final int FUN_VIEW_YUV_ID = 0x500;
+    private static final int FUN_VIEW_PC_ID = 0x600;
 
-    private TextView mViewHDMI1 = null;
-    private TextView mViewHDMI2 = null;
-    private TextView mViewHDMI3 = null;
-
-    private TextView mViewATV = null;
-    private TextView mViewDTV = null;
-    private TextView mViewAV  = null;
+    private portInfo mPortInfo = null;
 
     private static int mHdmiCount = 3;
 
@@ -68,12 +66,24 @@ public class FunUiTvSourceManager implements FunUiBase{
     private void addInfoList(){
         mTvSourceViewIDList.clear();
 
-        mTvSourceViewIDList.add(new TvSource(R.string.str_HDMI_port, FUN_VIEW_HDMI_ID));
-        mTvSourceViewIDList.add(new TvSource(R.string.str_HDMI_port, FUN_VIEW_HDMI_ID+1));
-        mTvSourceViewIDList.add(new TvSource(R.string.str_HDMI_port, FUN_VIEW_HDMI_ID+2));
+        deviceUtils mDevHandle = new deviceUtils(mContext);
+        mPortInfo = mDevHandle.getPortInfo();
+
+
+        mTvSourceViewIDList.add(new TvSource(R.string.str_HDMI1_port, FUN_VIEW_HDMI_ID));
+        mTvSourceViewIDList.add(new TvSource(R.string.str_HDMI2_port, FUN_VIEW_HDMI_ID+1));
+        if (mPortInfo.getHdmiPortNum() > 2){
+            mTvSourceViewIDList.add(new TvSource(R.string.str_HDMI3_port, FUN_VIEW_HDMI_ID+2));
+        }
+
+        mTvSourceViewIDList.add(new TvSource(R.string.str_AV_port, FUN_VIEW_AV_ID));
+        mTvSourceViewIDList.add(new TvSource(R.string.str_YUV_port, FUN_VIEW_YUV_ID));
         mTvSourceViewIDList.add(new TvSource(R.string.str_ATV_channel, FUN_VIEW_ATV_ID));
         mTvSourceViewIDList.add(new TvSource(R.string.str_DTV_channel, FUN_VIEW_DTV_ID));
-        mTvSourceViewIDList.add(new TvSource(R.string.str_AV_YUV_port, FUN_VIEW_AV_ID));
+
+        if (mPortInfo.getPcPortNum() == 1){
+            mTvSourceViewIDList.add(new TvSource(R.string.str_PC_port, FUN_VIEW_PC_ID));
+        }
     }
 
     private final View.OnFocusChangeListener mOnFocusChangeHandler =
@@ -135,9 +145,14 @@ public class FunUiTvSourceManager implements FunUiBase{
                     _tvCommonManager.setInputSource(TvCommonManager.INPUT_SOURCE_HDMI3);
                     break;
                 case FUN_VIEW_AV_ID:
-                    Toast.makeText(mContext, "YUV/AV",
+                    Toast.makeText(mContext, "AV",
                             Toast.LENGTH_SHORT).show();
                     _tvCommonManager.setInputSource(TvCommonManager.INPUT_SOURCE_CVBS);
+                    break;
+                case FUN_VIEW_YUV_ID:
+                    Toast.makeText(mContext, "YUV",
+                            Toast.LENGTH_SHORT).show();
+                    _tvCommonManager.setInputSource(TvCommonManager.INPUT_SOURCE_YPBPR);
                     break;
                 case FUN_VIEW_ATV_ID:
                     Toast.makeText(mContext, "ATV",
@@ -148,6 +163,11 @@ public class FunUiTvSourceManager implements FunUiBase{
                     Toast.makeText(mContext, "DTV",
                             Toast.LENGTH_SHORT).show();
                     _tvCommonManager.setInputSource(TvCommonManager.INPUT_SOURCE_DTV);
+                    break;
+                case FUN_VIEW_PC_ID:
+                    Toast.makeText(mContext, "VGA",
+                            Toast.LENGTH_SHORT).show();
+                    _tvCommonManager.setInputSource(TvCommonManager.INPUT_SOURCE_VGA);
                     break;
                 default:
                     Log.d(TAG, "error viewID!");
@@ -162,43 +182,47 @@ public class FunUiTvSourceManager implements FunUiBase{
         LinearLayout _LinearLayout = (LinearLayout) mView;
         LinearLayout SourceItemLayout = (LinearLayout)View.inflate(mContext,
                 R.layout.source_item_bar, null);
+        View _view = (View)View.inflate(mContext,
+                R.layout.source_item_bar, null);
 
         int listsize = mTvSourceViewIDList.size();
 
         mViewList = new View[listsize];
+//        for (int index = 0; index < listsize; index++){
+//            TextView _TextView = new TextView(mContext);
+//
+//            _TextView.setFocusable(true);
+//            mViewList[index] = _TextView;
+//            SourceItemLayout.addView(mViewList[index]);
+//        }
+//        _LinearLayout.addView(SourceItemLayout);
+
+
         for(int index = 0; index < listsize; index++){
-            TextView _TextView = new TextView(mContext);
-            LinearLayout.LayoutParams textViewParams =
-                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            textViewParams.leftMargin = 10;
-            textViewParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
-            _TextView.setLayoutParams(textViewParams);
-
-            _TextView.setFocusable(true);
-            if (index == 0){
-//                _TextView.requestFocus();
-            }
-            mViewList[index] = _TextView;
-            SourceItemLayout.addView(mViewList[index]);
+            mViewList[index] = _view.findViewById(R.id.str_HDMI1_port+index);
+            mViewList[index].setFocusable(true);
         }
+        _LinearLayout.addView(_view);
 
-//        mViewHDMI1 = (TextView)_view.findViewById(R.id.tv_test_source_hdmi1);
-//        mViewHDMI2 = (TextView)_view.findViewById(R.id.tv_test_source_hdmi2);
-//        mViewHDMI3 = (TextView)_view.findViewById(R.id.tv_test_source_hdmi3);
-//        mViewATV = (TextView) _view.findViewById(R.id.tv_test_source_atv);
-//        mViewDTV = (TextView) _view.findViewById(R.id.tv_test_source_dtv);
-//        mViewAV = (TextView) _view.findViewById(R.id.tv_test_source_av);
-//
-//
-//        mViewHDMI1.setOnFocusChangeListener(mOnFocusChangeHandler);
-//        mViewHDMI2.setOnFocusChangeListener(mOnFocusChangeHandler);
-//        mViewHDMI3.setOnFocusChangeListener(mOnFocusChangeHandler);
-//        mViewATV.setOnFocusChangeListener(mOnFocusChangeHandler);
-//        mViewDTV.setOnFocusChangeListener(mOnFocusChangeHandler);
-//        mViewAV.setOnFocusChangeListener(mOnFocusChangeHandler);
 
-        _LinearLayout.addView(SourceItemLayout);
+
+//        for(int index = 0; index < listsize; index++){
+//            TextView _TextView = new TextView(mContext);
+//            LinearLayout.LayoutParams textViewParams =
+//                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+//                    LinearLayout.LayoutParams.WRAP_CONTENT);
+//            textViewParams.leftMargin = 10;
+//            textViewParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//            _TextView.setLayoutParams(textViewParams);
+//
+//            _TextView.setFocusable(true);
+//            if (index == 0){
+////                _TextView.requestFocus();
+//            }
+//            mViewList[index] = _TextView;
+//            SourceItemLayout.addView(mViewList[index]);
+//        }
+
     }
 
     @Override

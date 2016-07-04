@@ -3,27 +3,37 @@ package com.funshion.autotest;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemProperties;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import com.funshion.autotest.factory.MtcFactory;
 import com.funshion.autotest.ui.FunUiEthManager;
+import com.funshion.autotest.ui.FunUiKeyPadManager;
 import com.funshion.autotest.ui.FunUiManager;
+import com.funshion.autotest.ui.FunUiPQManager;
 import com.funshion.autotest.ui.FunUiParamManager;
 import com.funshion.autotest.ui.FunUiPropertyInfoManager;
 import com.funshion.autotest.ui.FunUiTvSourceManager;
 import com.funshion.autotest.ui.FunUiUsbManager;
 import com.funshion.autotest.ui.FunUiVideoWindowManager;
 import com.funshion.autotest.ui.FunUiWifiManager;
+import com.funshion.autotest.util.deviceUtils;
+import com.funshion.autotest.util.portInfo;
 
 public class MainActivity extends Activity {
 	public static Context mContext = null;
 	FunUiManager mFunUiManager = null;
-	private static final String TAG = "FunUiEthManager";
+	private static final String TAG = "chenhai";
     private static final int FLAG_DISABLE_HOME_KEY = 0x80000000;
+	public static int mkeyFlag = 0;
+
+	private MtcFactory mtcFactory = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +44,19 @@ public class MainActivity extends Activity {
 		
 		mContext = this;
 		mFunUiManager = FunUiManager.getInstance();
-		
+
+		mtcFactory = new MtcFactory(mContext);
 		uiOperator();
 	}
-	
+
+	private void deviceInfo(){
+		portInfo _portInfo = null;
+		deviceUtils _devInfo = new deviceUtils(mContext);
+
+	}
+
 	private void uiOperator() {
+		deviceInfo();
 		// get module config for ui custom
 		// ModuleConfig moduleConfig = FunConfig.getModuleConfig();
 		
@@ -84,9 +102,15 @@ public class MainActivity extends Activity {
 				FunUiPropertyInfoManager.class.getSimpleName(), (View)rightLayout);
 
 		if(true){
+			mFunUiManager.addUiModule(FunUiPQManager.class.getSimpleName(),
+					new FunUiPQManager(mContext));
+			mFunUiManager.onCreateUiModuleByName(
+					FunUiPQManager.class.getSimpleName(), rightLayout);
+		}
+
+		if(true){
 			mFunUiManager.addUiModule(FunUiEthManager.class.getSimpleName(),
 					new FunUiEthManager(mContext));
-//			Log.d("chenhai test", "name :"+FunUiEthManager.class.getSimpleName());
 			mFunUiManager.onCreateUiModuleByName(
 					FunUiEthManager.class.getSimpleName(), leftLayout);
 		}
@@ -101,6 +125,13 @@ public class MainActivity extends Activity {
 					new FunUiUsbManager(mContext));
 			mFunUiManager.onCreateUiModuleByName(
 					FunUiUsbManager.class.getSimpleName(), leftLayout);
+		}
+
+		if (true){
+			mFunUiManager.addUiModule(FunUiKeyPadManager.class.getSimpleName(),
+					new FunUiKeyPadManager(mContext));
+			mFunUiManager.onCreateUiModuleByName(
+					FunUiKeyPadManager.class.getSimpleName(), leftLayout);
 		}
 
 		// show all UI
@@ -128,12 +159,61 @@ public class MainActivity extends Activity {
 
 //	@Override
 	protected void onResume() {
-		mFunUiManager.onResumeModuleByName(FunUiVideoWindowManager.class.getSimpleName());
+//		mFunUiManager.onResumeModuleByName(FunUiVideoWindowManager.class.getSimpleName());
 		super.onResume();
 	}
 
 	@Override
+	protected void onDestroy() {
+		Log.d(TAG, "chenhai test!!!!!!!!!!!");
+		mFunUiManager.onDestroyAllUiModule();
+		super.onDestroy();
+	}
+
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		String KEYPAD_IN_DEVICE = deviceUtils.KEYPAD_DEV_NAME;
+		boolean isKeypad = false;
+
+		if(KEYPAD_IN_DEVICE.equalsIgnoreCase(event.getDevice().getName())){
+			isKeypad = true;
+		}
+		else{
+			isKeypad = false;
+		}
+		Log.d(TAG, "chenhai test  keypad keycode = "+ keyCode + "isKeypad = " + isKeypad);
+
+		if (isKeypad){
+			switch (keyCode){
+				case KeyEvent.KEYCODE_VOLUME_DOWN:
+					mkeyFlag |= deviceUtils.KEYPAD_DOWN_FLAG;
+					break;
+				case KeyEvent.KEYCODE_VOLUME_UP:
+					mkeyFlag |= deviceUtils.KEYPAD_UP_FLAG;
+					break;
+				case KeyEvent.KEYCODE_CHANNEL_DOWN:
+					mkeyFlag |= deviceUtils.KEYPAD_LEFT_FLAG;
+					break;
+				case KeyEvent.KEYCODE_CHANNEL_UP:
+					mkeyFlag |= deviceUtils.KEYPAD_RIGHT_FLAG;
+					break;
+				case 255://KeyEvent.KEYCODE_POWER:
+					mkeyFlag |= deviceUtils.KEYPAD_POWER_FLAG;
+					break;
+				case KeyEvent.KEYCODE_MENU:
+					mkeyFlag |= deviceUtils.KEYPAD_MENU_FLAG;
+					break;
+				case KeyEvent.KEYCODE_SOFT_RIGHT:
+					mkeyFlag |= deviceUtils.KEYPAD_MTV_FLAG;
+					break;
+				default:
+					break;
+			}
+			Intent intent = new Intent(FunUiKeyPadManager.FUN_KEYPAD_ACTION);
+			intent.putExtra(FunUiKeyPadManager.FUN_KEYPAD_ACTION, mkeyFlag);
+			sendBroadcast(intent);
+		}
+
 		switch (keyCode){
 			case KeyEvent.KEYCODE_BACK:
 				String factoryMode = SystemProperties.get("sys.autotest.flag",
@@ -151,6 +231,14 @@ public class MainActivity extends Activity {
 			default:
 				break;
 		}
+
+		mtcFactory.factoryTestKey(keyCode);
+
 		return super.onKeyDown(keyCode, event);
+//		return true;
 	}
+
+
+
 }
+

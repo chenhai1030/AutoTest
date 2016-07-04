@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/str_device_model"-->
+        <!--android:layout_marginRight="@dimen/dimen_10px"-->
+        <!--android:layout_marginLeft="@dimen/dimen_10px"-->
+        <!--android:textSize="@dimen/dimen_36px" />-->
+
+    <!--<Spinner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/device_model_spinner"-->
+        <!--android:layout_marginRight="@dimen/dimen_10px"-->
+        <!--android:layout_marginLeft="@dimen/dimen_10px"-->
+        <!--android:textSize="@dimen/dimen_36px"/>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/str_pq_version"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:textSize="@dimen/dimen_36px" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pq_spinner"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:textSize="@dimen/dimen_36px"/>
+</LinearLayout>

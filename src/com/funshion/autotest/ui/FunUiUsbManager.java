@@ -66,7 +66,6 @@ public class FunUiUsbManager implements FunUiBase {
 	}
 
 	private final BroadcastReceiver mUsbReceive = new BroadcastReceiver() {
-		
 		//private static final String INTERAL_STORAGE = Environment.getExternalStorageDirectory().getAbsolutePath();
 		
 		@Override
@@ -102,11 +101,10 @@ public class FunUiUsbManager implements FunUiBase {
 			default:
 				break;
 			}
-            
+
             super.handleMessage(msg);
         }
     };
-
 
 	@Override
 	public boolean OnShow() {

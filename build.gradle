@@ -4,14 +4,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
     }
 }
 apply plugin: 'com.android.application'
 
 dependencies {
-    provided fileTree(dir: 'libs', include: ['framework.jar'])
+   // provided fileTree(dir: 'libs', include: ['framework.jar'])
     provided files('libs/mstar.jar')
+    provided files('libs/framework.jar')
 }
 
 android {

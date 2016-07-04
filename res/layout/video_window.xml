@@ -3,13 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="false"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <VideoView
         android:id="@+id/vv_video_surface_view"
-        android:layout_width="360sp"
-        android:layout_height="240sp"
-        android:layout_marginLeft="10sp"
+        android:layout_width="@dimen/dimen_630px"
+        android:layout_height="@dimen/dimen_460px"
+        android:layout_marginLeft="@dimen/dimen_20px"
         android:gravity="top"/>
+
+    <TextView
+        android:id="@+id/vv_item_bar_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dimen_20px"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:gravity="left"
+        android:textSize="@dimen/dimen_40px" />
 
 </LinearLayout>

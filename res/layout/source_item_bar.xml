@@ -1,9 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/source_item_group"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="top">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id = "@+id/str_HDMI1_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_1px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_HDMI2_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_HDMI3_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_AV_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_YUV_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_ATV_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_DTV_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
+
+    <TextView
+        android:id = "@+id/str_PC_port"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dimen_15px"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_weight="0.7"
+        android:textSize="@dimen/dimen_36px" />
 
 </LinearLayout>
