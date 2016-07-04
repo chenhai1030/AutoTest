@@ -44,6 +44,9 @@ public class FunLogicTvSourceManager {
         return mFunLogicTvSourceManager;
     }
 
+    public static int getCurrentSource(){
+        return TvCommonManager.getInstance().getCurrentTvInputSource();
+    }
 
     public void registerScanListener() {
         Log.d(TAG, "register Scan Event Listener");

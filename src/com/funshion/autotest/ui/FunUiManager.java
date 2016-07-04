@@ -112,6 +112,30 @@ public class FunUiManager {
 		return true;
 	}
 
+	public boolean onDestroyAllUiModule(){
+		int listSize = 0;
+
+		listSize = mUiList.size();
+		if(listSize == 0){
+			return false;
+		}
+
+		@SuppressWarnings("rawtypes")
+		Iterator uiItem = mUiList.entrySet().iterator();
+		while (uiItem.hasNext()) {
+			@SuppressWarnings("rawtypes")
+			Map.Entry mapEntry = (Map.Entry) uiItem.next();
+			FunUiBase _FunUiBase = (FunUiBase) mapEntry.getValue();
+			String name = (String) mapEntry.getKey();
+
+			if (!_FunUiBase.OnDestroy()) {
+				Log.e(TAG, "onDestory [" + name + "] failure !!");
+			}
+		}
+		return true;
+
+	}
+
 	public boolean onRefreshModuleByName(String name) {
 		FunUiBase _FunUiBase = mUiList.get(name);
 		if (_FunUiBase == null) {

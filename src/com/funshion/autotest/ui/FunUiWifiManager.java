@@ -74,7 +74,6 @@ public class FunUiWifiManager implements FunUiBase {
             mWifiLevelValue = getWifiSignalValue(scanResult);
             getWifiStatus(mWifiLevelValue);
             OnShow();
-
         }
     };
 

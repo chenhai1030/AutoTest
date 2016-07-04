@@ -5,8 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="str_test_time_show">Current test tiem: 0:0:0</string>
     <string name="str_usb_test_name">USB Test</string>
-    <string name="str_mac_address">MAC地址：</string>
-    <string name="str_serial_number">序列号 ：</string>
+    <string name="str_mac_address">MAC地址:</string>
+    <string name="str_serial_number">序列号:</string>
     <string name="str_device_id">设备 ID：</string>
     <string name="str_hdcp_key">HDCP Key:</string>
     <string name="str_test_status_name">两小时烤机</string>
@@ -15,12 +15,14 @@
     <string name="str_test_status_twohour_lock">锁定</string>
     <string name="str_test_status_twohour_unlock">无锁</string>
     <string name="str_SSID_name">SSID: </string>
+    <string name="str_panel_test_success">按键板: %1$s</string>
+    <string name="str_panel_test_fail">按键板: NULL</string>
     <string name="str_usb_test_success">USB 数量: %1$s</string>
     <string name="str_usb_test_fail">USB 无接入</string>
     <string name="str_wire_test_name">有线网络测试</string>
     <string name="str_wire_test_failure">网线无连接</string>
-    <string name="str_wire_test_success">IP地址：%1$s</string>
-    <string name="str_wifi_test_name">WiFi 测试：</string>
+    <string name="str_wire_test_success">IP地址:%1$s</string>
+    <string name="str_wifi_test_name">WiFi 测试:</string>
     <string name="str_wifi_test_failure">WiFi无连接</string>
     <string name="str_wifi_test_success">信号强度： %1$s</string>
     <string name="str_software_version_name">软件版本:</string>
@@ -31,9 +33,16 @@
     <string name="str_hour">时</string>
     <string name="str_minute">分</string>
     <string name="str_second">秒</string>
+    <string name="str_device_model">设备型号:%1$s</string>
+    <string name="str_pq_version">屏参版本:%1$s</string>
 
-    <string name="str_HDMI_port">HDMI %1$s</string>
-    <string name="str_AV_YUV_port">AV/YUV</string>
+    <string name="str_HDMI_port">HDMI%1$s</string>
+    <string name="str_HDMI1_port">HDMI1</string>
+    <string name="str_HDMI2_port">HDMI2</string>
+    <string name="str_HDMI3_port">HDMI3</string>
+    <string name="str_AV_port">AV</string>
+    <string name="str_YUV_port">YUV</string>
+    <string name="str_PC_port">VGA</string>
     <string name="str_ATV_channel">ATV</string>
     <string name="str_DTV_channel">DTV</string>
 </resources>

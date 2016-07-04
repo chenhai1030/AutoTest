@@ -22,6 +22,7 @@ public class FunUiParamManager implements FunUiBase{
         mParamNameViewIDList.put("mac", context.getString(R.string.str_mac_address));
         mParamNameViewIDList.put("sn", context.getString(R.string.str_serial_number));
         mParamNameViewIDList.put("hdcp", context.getString(R.string.str_hdcp_key));
+//        mParamNameViewIDList.put("pqversion", context.getString(R.string.str_pq_version));
     }
 
     @Override
