@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FunUiParamManager implements FunUiBase{
+    private String TAG = "AutoTest";
     private Context mContext = null;
     private View[] mViewList = null;
     private Map<String, String> mParamNameViewIDList = new HashMap<String, String>();
-    private String TAG = "FunUiParamManager";
 
     public FunUiParamManager(Context context){
         mContext = context;

@@ -126,7 +126,9 @@ public class FunUiEthManager implements FunUiBase{
         if(prop == null){
             return null;
         }
-        Iterator<InetAddress> iter = prop.getAllAddresses().iterator();
+
+       // Iterator<InetAddress> iter = prop.getAllAddresses().iterator();
+        Iterator<InetAddress> iter = null;
         // If there are no entries, return null
         if (!iter.hasNext()) return null;
         // Concatenate all available addresses, comma separated

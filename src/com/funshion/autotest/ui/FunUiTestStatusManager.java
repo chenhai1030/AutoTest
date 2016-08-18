@@ -30,7 +30,6 @@ public class FunUiTestStatusManager implements FunUiBase{
 
         creatview();
 
-
         return false;
     }
 

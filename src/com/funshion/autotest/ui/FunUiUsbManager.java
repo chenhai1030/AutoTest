@@ -17,6 +17,7 @@ import com.funshion.autotest.R;
 import com.funshion.autotest.logic.FunLogicStorageManager;
 
 public class FunUiUsbManager implements FunUiBase {
+	private static final String TAG = "AutoTest";
 	private Context mContext = null;
 	private View mView = null;
 	private int mCheckResult = -1;
@@ -28,7 +29,6 @@ public class FunUiUsbManager implements FunUiBase {
 
 	private static final int FUNTV_USB_MOUNTED = 1;
 
-    private static final String TAG = "FunUiUsbManager";
 
 	public FunUiUsbManager(Context context) {
 		mContext = context;

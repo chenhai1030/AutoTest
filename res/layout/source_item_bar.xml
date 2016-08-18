@@ -43,8 +43,8 @@
         android:id = "@+id/str_YUV_port"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/dimen_15px"
-        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginLeft="@dimen/dimen_4px"
         android:layout_weight="0.7"
         android:textSize="@dimen/dimen_36px" />
 
@@ -52,8 +52,8 @@
         android:id = "@+id/str_ATV_port"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/dimen_15px"
-        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginLeft="@dimen/dimen_4px"
         android:layout_weight="0.7"
         android:textSize="@dimen/dimen_36px" />
 

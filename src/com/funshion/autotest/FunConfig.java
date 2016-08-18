@@ -8,6 +8,17 @@ public class FunConfig {
      * Funtv Test System current module config
      */
     private static ModuleConfig mModuleConfig = null;
+
+    public static ModuleConfig getModuleConfig(){
+        if (null != mModuleConfig) {
+            return mModuleConfig;
+        }
+
+        mModuleConfig = new ModuleConfig();
+
+        return mModuleConfig;
+    }
+
     public static class ModuleConfig {
         /**
          * config test item
@@ -17,7 +28,9 @@ public class FunConfig {
         public boolean mModuleTestWireLink = true;
         public boolean mModuleTestSdCard = false;
         public boolean mModuleTestLocalVideo = true;
+        public boolean mModuleTestInputSignal = true;
         public boolean mModuleTestStatus = true;
+        public boolean mModuleTestKeyPad = true;
 
 		/*
 		 * config show info
@@ -25,8 +38,7 @@ public class FunConfig {
 
         public boolean mModuleInfoProperty = true;
         public boolean mModuleInfoParams = true;
-        public boolean mModuleInfoPromptInfo = true;
-        public boolean mModuleInfoButton = true;
+        public boolean mModuleInfoPQSpinner = true;
 
         public ModuleConfig() {
 

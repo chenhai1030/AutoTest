@@ -18,13 +18,14 @@ import com.funshion.autotest.R;
  * Created by chenhai on 5/30/16.
  */
 public class FunUiKeyPadManager implements FunUiBase {
+    private final String TAG = "AutoTest";
     private Context mContext = null;
     private View mView = null;
     private int panelKeyNum = 7;
     private int mCheckResult = -1;
     private TextView mPanelTestNameView = null;
     private TextView mPanelTestResultView = null;
-    private final String TAG = "FunUiKeyPadManager";
+
 
     public static String FUN_KEYPAD_ACTION = "com.funshion.autotest.KEYPADPRESSED";
 

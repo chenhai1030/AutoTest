@@ -22,6 +22,7 @@ import com.mstar.android.tvapi.common.vo.PanelProperty;
 import com.mstar.android.tvapi.common.vo.VideoWindowType;
 
 public class FunUiVideoWindowManager implements FunUiBase{
+    private static final String TAG = "AutoTest";
     private Context mContext = null;
     private VideoView mVideoView = null;
     private TextView mTextView = null;
@@ -33,7 +34,6 @@ public class FunUiVideoWindowManager implements FunUiBase{
 
     private int mInputSource = 0;
 
-    private String TAG = "FunUiVideoWindowManager";
 
     public FunUiVideoWindowManager(Context context){
         mContext = context;
@@ -98,6 +98,25 @@ public class FunUiVideoWindowManager implements FunUiBase{
         }
     }
 
+    public void setFullscale(){
+        try {
+            VideoWindowType videoWindowType = new VideoWindowType();
+            videoWindowType.height = 0xffff;
+            videoWindowType.width = 0xffff;
+            videoWindowType.x = 0xffff;
+            videoWindowType.y = 0xffff;
+            if (TvManager.getInstance() != null) {
+                TvManager.getInstance().getPictureManager()
+                        .selectWindow(EnumScalerWindow.E_MAIN_WINDOW);
+                TvManager.getInstance().getPictureManager().setDisplayWindow(videoWindowType);
+                TvManager.getInstance().getPictureManager().scaleWindow();
+            }
+        } catch (TvCommonException e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "setFullscale");
+
+    }
 
     @Override
     public boolean OnShow() {

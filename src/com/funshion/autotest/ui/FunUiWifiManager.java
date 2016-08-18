@@ -19,7 +19,7 @@ import java.util.Timer;
  * Created by chenhai on 5/13/16.
  */
 public class FunUiWifiManager implements FunUiBase {
-    private String TAG = "FunUiWifi";
+    private String TAG = "AutoTest";
     private Context mContext = null;
     private TextView mTestNameView = null;
     private TextView mTestStatusView = null;
@@ -57,7 +57,6 @@ public class FunUiWifiManager implements FunUiBase {
         mHandler.post(task);
         return false;
     }
-
 
     private Runnable task = new Runnable() {
         @Override

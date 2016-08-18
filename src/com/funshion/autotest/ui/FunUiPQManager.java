@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by chenhai on 6/6/16.
  */
 public class FunUiPQManager implements FunUiBase {
-    private final String TAG = "FunUiPQManager";
+    private static final String TAG = "AutoTest";
     private Context mContext = null;
     private View mView = null;
     private TextView mPQVersionView = null;

@@ -14,9 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 public class FunUiPropertyInfoManager implements FunUiBase{
+    private String TAG = "AutoTest";
     private Context mContext = null;
     private View mView = null;
-    private String TAG = "FunUiPropertyInfoManager";
     private String PROPERTY_SOFTWARE_ID = "ro.build.version.incremental";
     private String PROPERTY_BUILD_DATE = "ro.build.date";
     private String PROPERTY_DISP_ID = "ro.build.display.id";

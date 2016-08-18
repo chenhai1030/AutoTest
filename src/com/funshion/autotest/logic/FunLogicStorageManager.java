@@ -7,23 +7,20 @@
  */
 package com.funshion.autotest.logic;
 
-import java.lang.String;
-import java.lang.reflect.Method;
-
-import android.R.bool;
 import android.content.Context;
 import android.os.ServiceManager;
 import android.os.storage.IMountService;
 import android.os.storage.StorageManager;
 import android.util.Log;
 
+import java.lang.reflect.Method;
+
 public class FunLogicStorageManager{
+	private static final String TAG="AutoTest";
 	private Context mContext = null;
 	private Method mMethodGetPaths;
 	private static final String SDCARD_PREFIX_PATH = "/mnt/sdcard";
 	private static IMountService mMountService = null;
-	
-	private String TAG="FunLogicStorageManager";
 	
 	
 	public FunLogicStorageManager (Context context) {

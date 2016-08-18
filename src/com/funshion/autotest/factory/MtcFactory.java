@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
+import com.funshion.autotest.ui.FunUiManager;
 import com.mstar.android.tv.TvAudioManager;
 import com.mstar.android.tv.TvCommonManager;
 import com.mstar.android.tvapi.common.TvManager;
@@ -14,7 +15,7 @@ import com.mstar.android.tvapi.common.exception.TvCommonException;
  * Created by chenhai on 6/7/16.
  */
 public class MtcFactory {
-    public static String TAG = "MtcFactory";
+    public static String TAG = "AutoTest";
     public static final String MTC_SMT_ETH_ACTION = "Fun_tv_SMT_WIRE_TestResult";
     public static final String MTC_ETH_ACTION = "Fun_tv_WIRE_TestResult";
     public static final String MTC_WIFI_BT_ACTION = "Fun_tv_WIFI_BT_TestResult";
@@ -22,8 +23,14 @@ public class MtcFactory {
     private static final String FACTORY_TEST_DONE = "factory_test_done";
     private static final String NEED_HANDLE_FACTORY_RESET_EVENT = "need_handle_factory_reset_event";
 
+    public static final int SCALE_NONE = 0;
+    public static final int SCALE_FULL = 1;
+    public static final int SCALE_SMALL = 2;
+    public static int fullScale = SCALE_NONE;
+
     private Context mContext = null;
     private Handler mHandler = new Handler();
+    private FunUiManager mFunUiManager = FunUiManager.getInstance();
 
     public MtcFactory(Context context){
         mContext = context;
@@ -41,6 +48,7 @@ public class MtcFactory {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                fullScale = SCALE_FULL;
                 break;
             case 4252://KeyEvent.KEYCODE_HISENSE_TEST_BROAD_SVIDEO1:
                 Log.i(TAG, ".........KEYCODE_HISENSE_TEST_BROAD_SVIDEO1.............");

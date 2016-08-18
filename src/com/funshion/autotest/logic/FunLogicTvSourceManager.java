@@ -21,13 +21,13 @@ import com.mstar.android.tvapi.dtv.vo.DtvEventScan;
  * Created by chenhai on 5/19/16.
  */
 public class FunLogicTvSourceManager {
-    private static final String TAG = "TvSourceManager";
+    private static final String TAG = "AutoTest";
     public static final int SIGNAL_LOCK = 1001;
     public static final int SIGNAL_UNLOCK = 1002;
     public static boolean mIsTvPlaying = false;
     public static boolean mIsLocalPlaying = false;
 
-    private FunUiManager mFunUiManager = FunUiManager.getInstance();;
+    private FunUiManager mFunUiManager = FunUiManager.getInstance();
     private static FunLogicTvSourceManager mFunLogicTvSourceManager = null;
 
     /* TV source monitor */
@@ -35,7 +35,6 @@ public class FunLogicTvSourceManager {
     private OnTvPlayerEventListener mTvPlayerEventListener = null;
     private OnAtvPlayerEventListener mAtvPlayerEventListener = null;
     private OnDtvPlayerEventListener mDtvPlayerEventListener = null;
-    private TvCommonManager mTvCommonManager = null;
 
     public static FunLogicTvSourceManager getInstance(){
         if (mFunLogicTvSourceManager == null){
@@ -99,7 +98,7 @@ public class FunLogicTvSourceManager {
         int mInputSource = TvCommonManager.getInstance().getCurrentTvInputSource();
         Log.i(TAG, "startToPlay, mInputSource:" + mInputSource);
         if(mInputSource != TvCommonManager.INPUT_SOURCE_NONE
-                && mInputSource != TvCommonManager.INPUT_SOURCE_STORAGE){
+                && mInputSource != TvCommonManager.INPUT_SOURCE_STORAGE) {
 
             FunUiManager.getInstance().onPauseModuleByName(
                     FunUiVideoWindowManager.class.getSimpleName());
@@ -112,8 +111,10 @@ public class FunLogicTvSourceManager {
             registerScanListener();
 
             mIsTvPlaying = true;
+            mIsLocalPlaying = false;
         }else {
             mIsLocalPlaying = true;
+            mIsTvPlaying = false;
         }
     }
 
@@ -295,7 +296,7 @@ public class FunLogicTvSourceManager {
         public boolean onSignalLock(int i) {
             Log.d(TAG, "TvPlayerEventListener SIGNAL Lock***");
             // Shielding storage upload the default postevent
-            if (TvCommonManager.INPUT_SOURCE_STORAGE == mTvCommonManager.getCurrentTvInputSource()) {
+            if (TvCommonManager.INPUT_SOURCE_STORAGE == getCurrentSource()) {
                 return true;
             }
             mTvSignalLockHandler.sendEmptyMessage(SIGNAL_LOCK);
@@ -306,7 +307,7 @@ public class FunLogicTvSourceManager {
         public boolean onSignalUnLock(int i) {
             Log.d(TAG, "TvPlayerEventListener SIGNAL UnLock***");
             // Shielding storage upload the default postevent
-            if (TvCommonManager.INPUT_SOURCE_STORAGE == mTvCommonManager.getCurrentTvInputSource()) {
+            if (TvCommonManager.INPUT_SOURCE_STORAGE == getCurrentSource()) {
                 return true;
             }
             mTvSignalLockHandler.sendEmptyMessage(SIGNAL_UNLOCK);
@@ -494,8 +495,8 @@ public class FunLogicTvSourceManager {
 
         @Override
         public boolean onSignalLock(int i) {
-            int currentSource = mTvCommonManager.getCurrentTvInputSource();
-            boolean isDtvStable = mTvCommonManager.isSignalStable(TvCommonManager.INPUT_SOURCE_DTV);
+            int currentSource = getCurrentSource();
+            boolean isDtvStable = TvCommonManager.getInstance().isSignalStable(TvCommonManager.INPUT_SOURCE_DTV);
             Log.d(TAG, "DtvPlayerEventListener SIGNAL Lock***, dtv stable status =" + isDtvStable + ",input source=" + currentSource);
             if ((currentSource == TvCommonManager.INPUT_SOURCE_DTV) && isDtvStable) {
                 mTvSignalLockHandler.sendEmptyMessage(SIGNAL_LOCK);

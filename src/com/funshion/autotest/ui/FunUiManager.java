@@ -18,9 +18,9 @@ import java.util.Map;
  * 
  */
 public class FunUiManager {
+	private static final String TAG = "AutoTest";
 	private static Map<String, FunUiBase> mUiList = new HashMap<String, FunUiBase>();
 	private static FunUiManager mFunUiManager = null;
-	private static final String TAG = "FunUiManager";
 	
 	private FunUiManager(){
 		mUiList.clear();

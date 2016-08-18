@@ -295,7 +295,7 @@ public class deviceUtils {
     }
 
     private boolean isNotUD(){
-        return false;
+        return true;
 //        String screenType = SystemProperties.get("ro.screen.type");
 //        if (screenType == null){
 //            return true;

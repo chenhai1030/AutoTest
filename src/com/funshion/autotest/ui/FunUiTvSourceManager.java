@@ -21,7 +21,7 @@ import java.util.List;
  * Created by chenhai on 5/4/16.
  */
 public class FunUiTvSourceManager implements FunUiBase{
-    private String TAG = "TvSource";
+    private String TAG = "AutoTest";
     private Context mContext = null;
     private View mView = null;
     private View[] mViewList = null;
@@ -238,6 +238,7 @@ public class FunUiTvSourceManager implements FunUiBase{
 
     @Override
     public boolean OnDestroy() {
+        FunLogicTvSourceManager.getInstance().stopToPlay();
         return false;
     }
 
