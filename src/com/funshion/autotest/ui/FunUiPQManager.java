@@ -101,21 +101,22 @@ public class FunUiPQManager implements FunUiBase {
         deviceUtils mDevHandle = new deviceUtils(mContext);
 
         mBuildInfoList = mDevHandle.getBuildInfoList();
-        int listSize = mBuildInfoList.size();
-        if (listSize == 0) {
-            return null;
+        if (mBuildInfoList != null) {
+            int listSize = mBuildInfoList.size();
+            if (listSize == 0) {
+                return null;
+            }
+
+            Iterator devItem = mBuildInfoList.entrySet().iterator();
+
+            while (devItem.hasNext()) {
+                @SuppressWarnings("rawtypes")
+                Map.Entry mapEntry = (Map.Entry) devItem.next();
+                String name = (String) mapEntry.getKey();
+
+                dataList.add(name);
+            }
         }
-
-        Iterator devItem = mBuildInfoList.entrySet().iterator();
-
-        while (devItem.hasNext()) {
-            @SuppressWarnings("rawtypes")
-            Map.Entry mapEntry = (Map.Entry) devItem.next();
-            String name = (String) mapEntry.getKey();
-
-            dataList.add(name);
-        }
-
         return dataList;
     }
 

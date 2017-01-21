@@ -138,7 +138,7 @@ public class deviceUtils {
             return;
         }
         int count = cursor.getCount();
-
+        Log.d(TAG, "database count = " + count);
         try {
             cursor.moveToFirst();
             while(!cursor.isAfterLast()) {
@@ -248,12 +248,16 @@ public class deviceUtils {
     private Cursor getDataBaseCursor(String dbName, String tabName){
        // String AUTHORITY = "model";
         Uri CONTENT_URI = Uri.parse("content://" + dbName + "/" + tabName);
-        Cursor cursor = mContext.getContentResolver().query(CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-
+        Cursor cursor = null;
+        try {
+            cursor = mContext.getContentResolver().query(CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null);
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
         return cursor;
     }
 

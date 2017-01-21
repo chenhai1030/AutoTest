@@ -8,82 +8,81 @@
 package com.funshion.autotest.logic;
 
 import android.content.Context;
-import android.os.ServiceManager;
-import android.os.storage.IMountService;
 import android.os.storage.StorageManager;
 import android.util.Log;
 
 import java.lang.reflect.Method;
 
-public class FunLogicStorageManager{
-	private static final String TAG="AutoTest";
+public class FunLogicStorageManager {
 	private Context mContext = null;
 	private Method mMethodGetPaths;
-	private static final String SDCARD_PREFIX_PATH = "/mnt/sdcard";
-	private static IMountService mMountService = null;
-	
-	
-	public FunLogicStorageManager (Context context) {
+	private Method mMethdGetVolumeState;
+	StorageManager mStorageManager;
+
+	private String TAG = "FunLogicStorageManager";
+
+
+	public FunLogicStorageManager(Context context) {
 		mContext = context;
+		mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
 	}
-	
-	public int getUsbMountedNum(){
+
+	public int getUsbMountedNum() {
 		String[] paths;
 		int count = 0;
-		
+
 		paths = getVolumesPaths();
-		
-		for (int i = 0; i< paths.length; i++){
-			if (checkDeviceMounted(paths[i])){
-				count ++;
+
+		for (int i = 0; i < paths.length; i++) {
+			if (checkDeviceMounted(paths[i])) {
+				count++;
 			}
 		}
+		Log.d(TAG, "Storage'count:" + count);
 		/*there have a sdcard mounted*/
-		if (count >= 1){
-			count -=1;
+		if (count >= 1) {
+			count -= 1;
 		}
+
 		return count;
 	}
-	
-	private String[] getVolumesPaths(){
-		String[] paths=null;
-		StorageManager mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
-		
+
+	private String[] getVolumesPaths() {
+		String[] paths = null;
 		try {
-			mMethodGetPaths = mStorageManager.getClass().getMethod("getVolumePaths",null);
+			mMethodGetPaths = mStorageManager.getClass().getMethod("getVolumePaths", null);
 			paths = (String[]) mMethodGetPaths.invoke(mStorageManager, null);
-			
-			for (int i = 0; i< paths.length; i++){
-				Log.d(TAG,"Storage'paths[0]:"+paths[i]);  
+
+			for (int i = 0; i < paths.length; i++) {
+				Log.d(TAG, "Storage'paths[0]:" + paths[i]);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return paths;
 	}
-	
-	private static boolean checkDeviceMounted(String path) {		
-		if (null == path){
+
+	private boolean checkDeviceMounted(String path) {
+		if (null == path) {
 			return false;
 		}
 		String storageState = getStorageState(path);
+		Log.d("FunLogicStorageManager", "Storage'storageState:" + storageState + " path:" + path);
 		return "mounted".equalsIgnoreCase(storageState);
 	}
-	
-	private static String getStorageState(String path) {
-		if (null == path){
+
+	private String getStorageState(String path) {
+		if (null == path) {
 			return null;
 		}
-		if (null == mMountService){
-			mMountService = IMountService.Stub.asInterface(ServiceManager
-					.getService("mount"));
-		}
+		String states = null;
 		try {
-			return mMountService.getVolumeState(path).toString();
+			mMethdGetVolumeState = mStorageManager.getClass().getMethod("getVolumeState", String.class);
+			states = (String) mMethdGetVolumeState.invoke(mStorageManager, path);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return null;
+		return states;
 	}
 }

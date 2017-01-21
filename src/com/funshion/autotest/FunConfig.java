@@ -38,7 +38,7 @@ public class FunConfig {
 
         public boolean mModuleInfoProperty = true;
         public boolean mModuleInfoParams = true;
-        public boolean mModuleInfoPQSpinner = true;
+        public boolean mModuleInfoPQSpinner = false;
 
         public ModuleConfig() {
 

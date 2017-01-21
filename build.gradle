@@ -4,21 +4,18 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 apply plugin: 'com.android.application'
 
-dependencies {
-   // provided fileTree(dir: 'libs', include: ['framework.jar'])
-    provided files('libs/mstar.jar')
-    provided files('libs/framework.jar')
-}
-
 android {
-    compileSdkVersion 19
     buildToolsVersion "23.0.1"
-
+    productFlavors {
+        build938 {
+            compileSdkVersion 23
+        }
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -42,5 +39,10 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+    defaultConfig {}
+}
 
+dependencies {
+    build938Provided fileTree(include: ['framework_938.jar'], dir: 'libs')
+    build938Provided files('libs/mstar_938.jar')
 }

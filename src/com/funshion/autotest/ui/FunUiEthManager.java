@@ -19,6 +19,7 @@ import com.funshion.autotest.R;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by chenhai on 11/17/15.
@@ -126,9 +127,15 @@ public class FunUiEthManager implements FunUiBase{
         if(prop == null){
             return null;
         }
-
-       // Iterator<InetAddress> iter = prop.getAllAddresses().iterator();
         Iterator<InetAddress> iter = null;
+        try {
+            Method methodGetAllAddress = prop.getClass().getMethod("getAllAddresses", null);
+            List<InetAddress> addr = (List)methodGetAllAddress.invoke(prop, null);
+            iter = addr.iterator();
+        }catch (Exception e){
+
+        }
+
         // If there are no entries, return null
         if (!iter.hasNext()) return null;
         // Concatenate all available addresses, comma separated
