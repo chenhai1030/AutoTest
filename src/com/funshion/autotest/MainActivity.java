@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.funshion.autotest.FunConfig.ModuleConfig;
 import com.funshion.autotest.factory.MtcFactory;
+import com.funshion.autotest.ui.FunUiBTManager;
 import com.funshion.autotest.ui.FunUiEthManager;
 import com.funshion.autotest.ui.FunUiKeyPadManager;
 import com.funshion.autotest.ui.FunUiManager;
@@ -30,11 +31,12 @@ import com.funshion.autotest.util.deviceUtils;
 import com.funshion.autotest.util.portInfo;
 
 public class MainActivity extends Activity {
-	public static Context mContext = null;
+	private Context mContext = null;
 	FunUiManager mFunUiManager = null;
-	private static final String TAG = "chenhai";
+	private static final String TAG = "AutoTest";
     private static final int FLAG_DISABLE_HOME_KEY = 0x80000000;
 	public static int mkeyFlag = 0;
+	public static int keyPressed = 0;
 
 	private MtcFactory mtcFactory = null;
 
@@ -140,6 +142,13 @@ public class MainActivity extends Activity {
 					FunUiWifiManager.class.getSimpleName(), leftLayout);
 		}
 
+		if (moduleConfig.mModuleTestBTLink){
+			mFunUiManager.addUiModule(FunUiBTManager.class.getSimpleName(),
+					new FunUiBTManager(mContext));
+			mFunUiManager.onCreateUiModuleByName(
+					FunUiBTManager.class.getSimpleName(), leftLayout);
+		}
+
  		if (moduleConfig.mModuleTestUsbDevice){
 			mFunUiManager.addUiModule(FunUiUsbManager.class.getSimpleName(),
 					new FunUiUsbManager(mContext));
@@ -198,30 +207,32 @@ public class MainActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		String KEYPAD_IN_DEVICE = deviceUtils.KEYPAD_DEV_NAME;
 		boolean isKeypad = false;
+		int keyFlag = mkeyFlag;
 
-		if(KEYPAD_IN_DEVICE.equalsIgnoreCase(event.getDevice().getName())){
+		if(KEYPAD_IN_DEVICE.equalsIgnoreCase(event.getDevice().getName()) ||("Virtual".equalsIgnoreCase(event.getDevice().getName()))){
 			isKeypad = true;
-		}
-		else{
+		} else{
 			isKeypad = false;
 		}
-		Log.d(TAG, "chenhai test  keypad keycode = "+ keyCode + "isKeypad = " + isKeypad);
+		Log.d(TAG, "chenhai test  keypad keycode = "+ keyCode + "isKeypad = " + isKeypad + " name =" + event.getDevice().getName());
 
 		if (isKeypad){
+
 			switch (keyCode){
-				case KeyEvent.KEYCODE_VOLUME_DOWN:
+				case KeyEvent.KEYCODE_DPAD_DOWN:
 					mkeyFlag |= deviceUtils.KEYPAD_DOWN_FLAG;
 					break;
-				case KeyEvent.KEYCODE_VOLUME_UP:
+				case KeyEvent.KEYCODE_DPAD_UP:
 					mkeyFlag |= deviceUtils.KEYPAD_UP_FLAG;
 					break;
-				case KeyEvent.KEYCODE_CHANNEL_DOWN:
+				case KeyEvent.KEYCODE_DPAD_LEFT:
 					mkeyFlag |= deviceUtils.KEYPAD_LEFT_FLAG;
 					break;
-				case KeyEvent.KEYCODE_CHANNEL_UP:
+				case KeyEvent.KEYCODE_DPAD_RIGHT:
 					mkeyFlag |= deviceUtils.KEYPAD_RIGHT_FLAG;
 					break;
 				case 255://KeyEvent.KEYCODE_POWER:
+				case KeyEvent.KEYCODE_DPAD_CENTER:
 					mkeyFlag |= deviceUtils.KEYPAD_POWER_FLAG;
 					break;
 				case KeyEvent.KEYCODE_MENU:
@@ -233,8 +244,13 @@ public class MainActivity extends Activity {
 				default:
 					break;
 			}
+			Log.d(TAG, "keyFlag = "+ keyFlag + "keyPressed = " + keyPressed + " mkeyFlag =" + mkeyFlag);
+			if ((keyFlag != mkeyFlag)){
+				keyPressed++;
+			}
+
 			Intent intent = new Intent(FunUiKeyPadManager.FUN_KEYPAD_ACTION);
-			intent.putExtra(FunUiKeyPadManager.FUN_KEYPAD_ACTION, mkeyFlag);
+			intent.putExtra(FunUiKeyPadManager.FUN_KEYPAD_ACTION, keyPressed);
 			sendBroadcast(intent);
 		}
 

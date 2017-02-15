@@ -14,14 +14,16 @@ import android.widget.TextView;
 
 import com.funshion.autotest.R;
 
-/**
+import static com.funshion.autotest.MainActivity.keyPressed;
+
+/*
  * Created by chenhai on 5/30/16.
  */
 public class FunUiKeyPadManager implements FunUiBase {
     private final String TAG = "AutoTest";
     private Context mContext = null;
     private View mView = null;
-    private int panelKeyNum = 7;
+    private int panelKeyNum = 5;
     private int mCheckResult = -1;
     private TextView mPanelTestNameView = null;
     private TextView mPanelTestResultView = null;
@@ -59,32 +61,30 @@ public class FunUiKeyPadManager implements FunUiBase {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            Log.d(TAG,"action = "+ action);
-
             if (action.equals("android.intent.action.BOOT_COMPLETED")) {
                 Log.d(TAG,"*********** isBootcompletedBroadcast");
             }
 
             if (action.equals(FUN_KEYPAD_ACTION)){
                 int date = intent.getIntExtra(action, 0);
+                Log.d(TAG,"data = "+ date);
                 mRefreshHandler.sendEmptyMessage(date);
             }
-
         }
     };
 
     private Handler mRefreshHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            mCheckResult = msg.what;
-            OnShow();
-            super.handleMessage(msg);
+        mCheckResult = msg.what;
+        OnShow();
+        super.handleMessage(msg);
         }
     };
 
     @Override
     public boolean OnShow() {
-        mPanelTestNameView.setText("KeyPad Test");
+        mPanelTestNameView.setText(R.string.str_keypad_test_name);
         if (mCheckResult > 0){
             String showText = mContext.getString(R.string.str_panel_test_success, mCheckResult);
             mPanelTestResultView.setText(showText);

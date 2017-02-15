@@ -10,16 +10,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.funshion.autotest.FunConfig;
 import com.funshion.autotest.R;
 
 import java.util.List;
 import java.util.Timer;
 
-/**
+/*
  * Created by chenhai on 5/13/16.
  */
 public class FunUiWifiManager implements FunUiBase {
-    private String TAG = "AutoTest";
+    private String TAG = "FunUiWifiManager";
     private Context mContext = null;
     private TextView mTestNameView = null;
     private TextView mTestStatusView = null;
@@ -27,7 +28,6 @@ public class FunUiWifiManager implements FunUiBase {
     private static final int WIFI_TEST_SUCCESS = 0x1100;
     private static final int WIFI_TEST_FAIL = 0x1101;
     private static final int WIFI_TEST_LOW = 0x1102;
-    private static final int WIFI_STANDORD = -60;
     private static final int WIFI_FAIL_VALUE = -100;
     private int mWifiLevelValue = -100;
     private boolean mIsWifiRefresh = false;
@@ -35,8 +35,10 @@ public class FunUiWifiManager implements FunUiBase {
 
     private Handler mHandler = new Handler();
 
-    private WifiManager mWifiManager;
-    private final String FunTestSSID = "ROM";
+    private WifiManager mWifiManager = null;
+    private FunConfig.ModuleConfig mModuleConfig = FunConfig.getModuleConfig();
+    private final String FunTestSSID = mModuleConfig.FunTestSSID;
+    private final int WIFI_STANDORD = mModuleConfig.WIFI_STANDORD;
 
     private boolean mCheckResult = false;
     private final Timer timer = new Timer();
@@ -109,30 +111,27 @@ public class FunUiWifiManager implements FunUiBase {
         if (value >= WIFI_STANDORD && value <= -1) {
             mWifiTestStatus = WIFI_TEST_SUCCESS;
         }
-
     }
 
     private ScanResult getWifiScanResult(){
         ScanResult tempResult = null;
-        List<ScanResult> mwifiList = null;
 
         mWifiManager.startScan();
-        mwifiList = mWifiManager.getScanResults();
 
-        if (mwifiList == null){
+        final List<ScanResult> mwifiList = mWifiManager.getScanResults();
+
+        Log.d(TAG, "scan wifi size is " + mwifiList.size());
+        if (mwifiList.isEmpty() || mwifiList.size() <= 0) {
             return null;
         }
-
-//        Log.d(TAG, "wifi:"+mwifiList);
 
         for (ScanResult tempScan:mwifiList){
             if(tempScan == null){
                 continue;
             }
 
-//            Log.d(TAG, "SSID = "+ tempScan.SSID);
+            Log.d(TAG, "SSID = "+ tempScan.SSID);
             if(!tempScan.SSID.equals(FunTestSSID)){
-              //  Log.d(TAG, "continue ");
                 continue;
             }
 
@@ -155,7 +154,7 @@ public class FunUiWifiManager implements FunUiBase {
     @Override
     public boolean OnShow() {
         mTestNameView.setText(R.string.str_wifi_test_name);
-        String wifiShow = null;
+        String wifiShow;
 
         switch (mWifiTestStatus){
             case WIFI_TEST_SUCCESS:

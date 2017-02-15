@@ -3,7 +3,7 @@
 
     <string name="app_name">FunTVautotest</string>
     <string name="action_settings">Settings</string>
-    <string name="str_test_time_show">Current test tiem: 0:0:0</string>
+    <string name="str_test_time_show">Current test time: 0:0:0</string>
     <string name="str_usb_test_name">USB Test</string>
     <string name="str_mac_address">MAC地址:</string>
     <string name="str_serial_number">序列号:</string>
@@ -25,6 +25,9 @@
     <string name="str_wifi_test_name">WiFi 测试:</string>
     <string name="str_wifi_test_failure">WiFi无连接</string>
     <string name="str_wifi_test_success">信号强度： %1$s</string>
+    <string name="str_bt_test_name">BT 测试:</string>
+    <string name="str_bt_test_failure">BT无连接</string>
+    <string name="str_keypad_test_name">KeyPad Test</string>
     <string name="str_software_version_name">软件版本:</string>
     <string name="str_publishtime_name">发布时间:</string>
     <string name="str_year">年</string>

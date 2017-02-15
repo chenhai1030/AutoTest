@@ -27,18 +27,17 @@ public class FunUiPropertyInfoManager implements FunUiBase{
     private List<PropertyInfo> mPropertyNameViewIDList = new ArrayList<FunUiPropertyInfoManager.PropertyInfo>();
     private View[] mViewList = null;
 
-    public class PropertyInfo {
-        public int mResID;
-        public String mPropertyValue;
+    private class PropertyInfo {
+        int mResID;
+        String mPropertyValue;
 
-        public PropertyInfo(int resID, String propName) {
+        PropertyInfo(int resID, String propName) {
             mResID = resID;
             mPropertyValue = propName;
         }
     }
     public FunUiPropertyInfoManager(Context context){
         mContext = context;
-        Log.i(TAG, "chenhai test = " );
         getPropertyValues();
         Log.i(TAG, "mSoftwareVersion  = "+mSoftwareVersion);
         addInfoList();

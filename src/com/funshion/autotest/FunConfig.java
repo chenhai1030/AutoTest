@@ -1,6 +1,6 @@
 package com.funshion.autotest;
 
-/**
+/*
  * Created by chenhai on 7/4/16.
  */
 public class FunConfig {
@@ -23,24 +23,36 @@ public class FunConfig {
         /**
          * config test item
          */
-        public boolean mModuleTestWifiLink = true;
-        public boolean mModuleTestUsbDevice = true;
-        public boolean mModuleTestWireLink = true;
-        public boolean mModuleTestSdCard = false;
-        public boolean mModuleTestLocalVideo = true;
-        public boolean mModuleTestInputSignal = true;
-        public boolean mModuleTestStatus = true;
-        public boolean mModuleTestKeyPad = true;
+        boolean mModuleTestWifiLink = true;
+        boolean mModuleTestBTLink = true;
+        boolean mModuleTestUsbDevice = true;
+        boolean mModuleTestWireLink = true;
+        boolean mModuleTestLocalVideo = true;
+        boolean mModuleTestInputSignal = true;
+        boolean mModuleTestStatus = true;
+        boolean mModuleTestKeyPad = true;
 
 		/*
 		 * config show info
 		 */
 
-        public boolean mModuleInfoProperty = true;
-        public boolean mModuleInfoParams = true;
-        public boolean mModuleInfoPQSpinner = false;
+        boolean mModuleInfoProperty = true;
+        boolean mModuleInfoParams = true;
+        boolean mModuleInfoPQSpinner = false;
 
-        public ModuleConfig() {
+        /*
+         * config WIFI test SSID
+         */
+        public final String FunTestSSID = "funshion-wh";
+        public final int WIFI_STANDORD = -60;
+
+        /*
+         * config BT test BSSID
+         */
+        public final String FunTestName = "小米蓝牙音箱";
+        public final int BT_STANDORD = -60;
+
+        ModuleConfig() {
 
         }
     }
